@@ -47,6 +47,18 @@ services:
       kafka-topics --bootstrap-server kafka:9092 --list
       "
 
+  kafka-exporter:
+    image: danielqsj/kafka-exporter:v1.7.0
+    container_name: kafka-exporter
+    depends_on:
+      kafka:
+        condition: service_healthy
+    ports:
+      - "9308:9308"
+    command:
+      - --kafka.server=kafka:9092
+      - --web.listen-address=:9308
+
   schema-registry:
     image: confluentinc/cp-schema-registry:7.7.1
     container_name: schema-registry
@@ -197,6 +209,7 @@ services:
     container_name: prometheus
     depends_on:
       - consumer-service
+      - kafka-exporter
     ports:
       - "9090:9090"
     volumes:

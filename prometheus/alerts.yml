@@ -36,3 +36,12 @@ groups:
         annotations:
           summary: Cassandra write errors detected
           description: consumer-service has observed Cassandra write errors in the last 5 minutes.
+
+      - alert: ConsumerLagHigh
+        expr: sum(kafka_consumergroup_lag{consumergroup="warehouse-state-consumer",topic="warehouse-events"}) > 0
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: Consumer lag is growing
+          description: The warehouse consumer group has pending messages in Kafka for more than 30 seconds.
