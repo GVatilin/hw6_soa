@@ -1,0 +1,35 @@
+{
+  "type": "record",
+  "name": "WarehouseEvent",
+  "namespace": "com.sleepyy8.warehouse",
+  "fields": [
+    {"name": "event_id", "type": "string"},
+    {"name": "event_type", "type": "string"},
+    {"name": "product_id", "type": ["null", "string"], "default": null},
+    {"name": "quantity", "type": ["null", "int"], "default": null},
+    {"name": "zone_id", "type": ["null", "string"], "default": null},
+    {"name": "supplier_id", "type": ["null", "string"], "default": null},
+    {"name": "from_zone_id", "type": ["null", "string"], "default": null},
+    {"name": "to_zone_id", "type": ["null", "string"], "default": null},
+    {"name": "order_id", "type": ["null", "string"], "default": null},
+    {
+      "name": "items",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "OrderItem",
+          "fields": [
+            {"name": "product_id", "type": "string"},
+            {"name": "quantity", "type": "int"},
+            {"name": "zone_id", "type": ["null", "string"], "default": null}
+          ]
+        }
+      },
+      "default": []
+    },
+    {"name": "event_timestamp", "type": "string"},
+    {"name": "sequence_number", "type": ["null", "long"], "default": null},
+    {"name": "metadata", "type": {"type": "map", "values": "string"}, "default": {}}
+  ]
+}

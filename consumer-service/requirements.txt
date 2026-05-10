@@ -1,0 +1,10 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+confluent-kafka[avro]==2.6.1
+fastavro==1.10.0
+cassandra-driver==3.29.2
+prometheus-client==0.21.1
+requests==2.32.3
+python-dateutil==2.9.0.post0

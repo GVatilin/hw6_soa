@@ -1,0 +1,38 @@
+groups:
+  - name: smart-warehouse
+    rules:
+      - alert: ConsumerServiceDown
+        expr: up{job="consumer-service"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: Consumer service is down
+          description: Prometheus cannot scrape consumer-service for more than 30 seconds.
+
+      - alert: KafkaConsumerDisconnected
+        expr: consumer_connected == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: Kafka consumer loop is disconnected
+          description: consumer-service is running but the Kafka consumer loop is not connected.
+
+      - alert: CassandraQuorumUnavailable
+        expr: cassandra_quorum_available == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: Cassandra QUORUM is unavailable
+          description: Fewer than two Cassandra nodes are up, so QUORUM writes cannot succeed.
+
+      - alert: CassandraWriteErrors
+        expr: increase(cassandra_write_errors_total[5m]) > 0
+        for: 0s
+        labels:
+          severity: warning
+        annotations:
+          summary: Cassandra write errors detected
+          description: consumer-service has observed Cassandra write errors in the last 5 minutes.
